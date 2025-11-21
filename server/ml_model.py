@@ -40,21 +40,25 @@ class SegmentationModel:
             ignore_mismatched_sizes=True
         )
         
+        # Force CPU for memory optimization (Render free tier has 512MB RAM)
+        device = "cpu"  # CPU-only mode
+        
         # Load your trained weights
         try:
-            state_dict = torch.load(model_path, map_location="cpu")
+            state_dict = torch.load(model_path, map_location=device)
             self.model.load_state_dict(state_dict)
+            self.model.to(device)
             self.model.eval()
-            print("✅ Loaded SegFormer model weights successfully")
+            print(f"✅ Loaded SegFormer model weights successfully on {device}")
         except Exception as e:
             print(f"❌ Failed to load model weights: {e}")
             raise
         
-        # Load the image processor (same as training)
+        # Load the image processor (reduced size for memory optimization)
         self.image_processor = SegformerImageProcessor.from_pretrained(
             "nvidia/mit-b0",
             do_resize=True,
-            size={"height": 512, "width": 512},
+            size={"height": 256, "width": 256},  # Reduced from 512 to save memory
             do_normalize=True
         )
         

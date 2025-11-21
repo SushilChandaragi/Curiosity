@@ -3,9 +3,10 @@ fastapi==0.109.0
 uvicorn[standard]==0.27.0
 gunicorn==21.2.0
 
-# ML Libraries
-torch>=2.5.0
-torchvision>=0.20.0
+# CPU-only PyTorch (much smaller - ~200MB vs 2GB CUDA version)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.5.0+cpu
+torchvision==0.20.0+cpu
 transformers==4.37.0
 pillow>=10.0.0
 
