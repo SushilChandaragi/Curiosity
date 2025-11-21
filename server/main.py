@@ -18,7 +18,7 @@ from models import (
 from auth import (
     hash_password, verify_password, create_access_token, get_current_user
 )
-from ml_model import model, image_to_base64
+from ml_model import get_model, image_to_base64
 
 app = FastAPI(title="Image Segmentation API")
 
@@ -141,7 +141,8 @@ async def segment_image(
         raise HTTPException(status_code=400, detail="File must be an image")
     
     try:
-        # Run ML model
+        # Run ML model (loads lazily on first request)
+        model = get_model()
         segmentation_mask = model.segment_image(file_bytes)
         
         # Convert images to Base64 for storage/transmission

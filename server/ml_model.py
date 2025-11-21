@@ -225,5 +225,12 @@ def image_to_base64(img: Image.Image) -> str:
     img.save(buffered, format="PNG")
     return base64.b64encode(buffered.getvalue()).decode()
 
-# Global model instance (loaded once when server starts)
-model = SegmentationModel()
+# Global model instance (loaded lazily on first request)
+_model_instance = None
+
+def get_model():
+    """Get or initialize the model instance (lazy loading)"""
+    global _model_instance
+    if _model_instance is None:
+        _model_instance = SegmentationModel()
+    return _model_instance
