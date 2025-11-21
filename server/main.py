@@ -25,8 +25,13 @@ app = FastAPI(title="Image Segmentation API")
 # Enable CORS so React can communicate with this server
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins (configure properly in production)
-    allow_credentials=True,
+    allow_origins=[
+        "http://localhost:3000",
+        "https://curiosity-frontend.onrender.com",
+        "https://curiosity-frontend-*.onrender.com",
+        "*"
+    ],
+    allow_credentials=False,  # Must be False when using wildcard origins
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["*"],
