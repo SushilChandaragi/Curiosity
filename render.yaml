@@ -6,9 +6,8 @@ services:
     region: oregon
     plan: free
     branch: main
-    rootDir: server
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
+    buildCommand: "pip install -r server/requirements.txt"
+    startCommand: "cd server && gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
     envVars:
       - key: MONGODB_URI
         sync: false
@@ -25,9 +24,8 @@ services:
     region: oregon
     plan: free
     branch: main
-    rootDir: client
-    buildCommand: "npm install && npm run build"
-    startCommand: "npx serve -s build -p $PORT"
+    buildCommand: "cd client && npm install && npm run build"
+    startCommand: "cd client && npx serve -s build -p $PORT"
     envVars:
       - key: REACT_APP_API_URL
         value: https://curiosity-backend.onrender.com
