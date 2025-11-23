@@ -1,6 +1,7 @@
-# 🔮 AI Image Segmentation Platform
+# Curiosity -🔮 An AI Mars Image Segmentation Platform
+Built with **FastAPI** (Python backend) and **React** (frontend) with MongoDB for data storage.
 
-A professional, dark-mode web application for running image segmentation models. Built with **FastAPI** (Python backend) and **React** (frontend) with MongoDB for data storage.
+[Render Prototype here!](https://curiosity-frontend.onrender.com/)
 
 ## ✨ Features
 
@@ -9,8 +10,6 @@ A professional, dark-mode web application for running image segmentation models.
 - 🤖 **ML Model Integration** - Runs PyTorch/Hugging Face models (.pth/.hf files)
 - 📊 **Results Display** - View original image + segmentation mask side-by-side
 - 📜 **History** - Browse all previous segmentations
-- 🌙 **Dark Mode UI** - Professional gradient design
-
 ---
 
 ## 🏗️ Architecture
@@ -183,31 +182,6 @@ The browser will automatically open to http://localhost:3000
 
 ---
 
-## 🎮 How to Use
-
-### **1. Create Account**
-- Open http://localhost:3000
-- Click "Sign up"
-- Enter your name, email, and password
-- You'll be automatically logged in
-
-### **2. Upload & Segment Image**
-- Click "Choose Image"
-- Select an image from your computer
-- Click "Run Model"
-- Wait for processing (shows loading spinner)
-- View results: Original image + Segmentation mask
-
-### **3. View History**
-- Scroll down to see "Previous Results"
-- Click any thumbnail to view that segmentation again
-- Results are saved forever in MongoDB
-
-### **4. Logout**
-- Click "Logout" button in top-right corner
-
----
-
 ## 📂 Project Structure
 
 ```
@@ -312,22 +286,7 @@ Curiosity/
 
 ---
 
-## 🛠️ Customization Guide
 
-### **Change Colors**
-Edit `client/src/App.css`:
-```css
-/* Main gradient */
-background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
-
-/* Accent color (change #00d4ff to your color) */
-background: linear-gradient(90deg, #00d4ff, #7b2ff7);
-```
-
-### **Add More Fields to User Profile**
-1. Update `server/models.py` → Add field to `UserRegister`
-2. Update `server/main.py` → Save field in `/auth/register`
-3. Update `client/src/components/Register.js` → Add input field
 
 ### **Store Images in Files Instead of Database**
 Replace Base64 storage in `server/main.py`:
@@ -359,67 +318,6 @@ self.model.load_state_dict(torch.load("path/to/your_model.pth"))
 self.model.eval()
 
 # Update segment_image() method with your preprocessing
-```
-
----
-
-## 🐛 Troubleshooting
-
-### **MongoDB Connection Error**
-```
-Error: MongoClient connection failed
-```
-**Solution:**
-- Make sure MongoDB is running: `net start MongoDB` (Windows)
-- Check connection string in `.env` file
-- If using Atlas, whitelist your IP address
-
-### **Module Not Found Errors**
-```
-ModuleNotFoundError: No module named 'fastapi'
-```
-**Solution:**
-```powershell
-# Backend
-cd server
-.\venv\Scripts\Activate
-pip install -r requirements.txt
-
-# Frontend
-cd client
-npm install
-```
-
-### **CORS Errors in Browser**
-```
-Access to fetch at 'http://localhost:8000' has been blocked by CORS policy
-```
-**Solution:**
-- Make sure backend is running on port 8000
-- Check `FRONTEND_URL` in `.env` matches React port (3000)
-
-### **Model Loading Fails**
-```
-RuntimeError: Error(s) in loading state_dict
-```
-**Solution:**
-- Make sure model architecture matches the saved weights
-- Check file path is correct
-- If using .pth, you need the model class definition
-
-### **Port Already in Use**
-```
-ERROR: [Errno 10048] error while attempting to bind on address
-```
-**Solution:**
-```powershell
-# Kill process on port 8000 (backend)
-netstat -ano | findstr :8000
-taskkill /PID <PID> /F
-
-# Kill process on port 3000 (frontend)
-netstat -ano | findstr :3000
-taskkill /PID <PID> /F
 ```
 
 ---
@@ -465,30 +363,6 @@ taskkill /PID <PID> /F
 2. Serve the `build/` folder with Nginx or similar
 
 3. Update API URL in `src/api.js` to production backend URL
-
----
-
-## 💡 Next Steps / Ideas
-
-- [ ] Add image download button for segmentation results
-- [ ] Add confidence scores for each segment
-- [ ] Support multiple models (let user choose)
-- [ ] Add image filters/preprocessing options
-- [ ] Export results as JSON
-- [ ] Add batch processing (upload multiple images)
-- [ ] Add model comparison feature
-- [ ] Dark/light mode toggle
-
----
-
-## 🤝 Need Help?
-
-If you get stuck, check:
-1. Make sure MongoDB is running
-2. Both servers (backend + frontend) are running
-3. Check browser console for errors (F12)
-4. Check backend terminal for error messages
-
 ---
 
 ## 📝 License
